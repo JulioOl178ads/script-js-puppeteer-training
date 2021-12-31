@@ -1,30 +1,15 @@
 const puppeter = require('puppeteer');
 
 async function main(){
-    // * Iniciando Navegação
-    const robot_login = 'rpa_prp@cadmus.com.br'
-    const robot_password = '###'
+    // * Iniciando Navegação com o Browser
     const browser = await launch_browser();
     let [page] = await browser.pages();
 
-    // * Login
-    await page.goto('https://help.goobee.com.br/login');
-    page = await await_new_pop_up(browser, page, '//span[contains(text(), "Login com Beefor")]');
-    await write(page, '//input[@formcontrolname="email"]', robot_login);
-    await write(page, '//input[@formcontrolname="senha"]', robot_password);
-    await click(page, '//span[contains(text(), "LOGIN")]');
-    [page] = await return_first_page(browser, page);
-    await wait_url_ends_with(page, '/home');
-
-    // ! Buscando Novos Tickets
-    await page.goto('https://help.goobee.com.br/gestao-solicitacoes');
-    await write(page, '//input[@formcontrolname="tipoSolicitacao"]', 'RPA>')
-    await click(page, '//span[contains(text(), "RPA>Criação de Acessos (OnBoarding)")]')
-    await click(page, '//span[contains(text(), "Interagir")]')
-    await find(page, '//input[@formcontrolname="tipo"]')
-    text = await get_value(page, '//textarea[@formcontrolname="descricao"]')
-    console.log(text)
-    //await browser.close()
+    // * Pequena Simulação
+    await page.goto('https://www.google.com/');
+    await write(page, '//input[@name="q"]', 'Teste Busca');
+    await click(page, '//form/div[1]/div[1]/div[3]/center/input[1][@value="Pesquisa Google"]');
+    // * await browser.close()
 }
 
 async function launch_browser(isHeadless=false){
@@ -75,6 +60,5 @@ async function wait_url_ends_with(page, text){
 async function get_value(page, xpath){
     return await page.$eval('textarea[formcontrolname="descricao"]', ({ value }) => value);
 };
-
 
 main()
