@@ -1,4 +1,5 @@
-const puppeter = require('puppeteer');
+const arrow_functions = require('./arrow_functions.js');
+
 
 async function main(){
     // * Iniciando Navegação com o Browser
@@ -12,46 +13,5 @@ async function main(){
     // * await browser.close()
 }
 
-// * Arrow Functions Training
-const launch_browser = async (isHeadless = false) => {
-    const browser = await puppeter.launch({
-        headless: isHeadless,
-        defaultViewport:null,
-        args:['--start-maximized']
-    });
-
-    return browser;
-}
-
-const click = async (page, xpath) => {
-    await page.waitForXPath(xpath)
-    let element = await page.$x(xpath);
-    await element[0].click();
-}
-
-const write = async (page, xpath, text) => {
-    await page.waitForXPath(xpath)
-    let element = await page.$x(xpath);
-    await element[0].type(text);
-}
-
-
-const find = async (page, xpath) => {
-    await page.waitForXPath(xpath)
-    let element = await page.$x(xpath);
-    return element;
-}
-
-const await_new_pop_up = async (browser, page, xpath) => {
-    const newPagePromise = new Promise(x => browser.once('targetcreated', target => x(target.page())));
-    await click(page, xpath);
-    return await newPagePromise;
-}
-
-const return_first_page = async browser => { return await browser.pages() }
-
-const wait_url_ends_with = async (page, text) => { await page.waitForFunction("window.location.pathname == '" + text + "'"); }
-
-const get_value = async (page, xpath) => { return await page.$eval('textarea[formcontrolname="descricao"]', ({ value }) => value); }
 
 main()
