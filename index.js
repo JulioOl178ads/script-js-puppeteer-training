@@ -12,7 +12,8 @@ async function main(){
     // * await browser.close()
 }
 
-async function launch_browser(isHeadless=false){
+// * Arrow Functions Training
+const launch_browser = async (isHeadless = false) => {
     const browser = await puppeter.launch({
         headless: isHeadless,
         defaultViewport:null,
@@ -20,45 +21,37 @@ async function launch_browser(isHeadless=false){
     });
 
     return browser;
-};
+}
 
-async function click(page, xpath)
-{
+const click = async (page, xpath) => {
     await page.waitForXPath(xpath)
     let element = await page.$x(xpath);
     await element[0].click();
-};
+}
 
-async function write(page, xpath, text)
-{
+const write = async (page, xpath, text) => {
     await page.waitForXPath(xpath)
     let element = await page.$x(xpath);
     await element[0].type(text);
-};
+}
 
-async function find(page, xpath){
+
+const find = async (page, xpath) => {
     await page.waitForXPath(xpath)
     let element = await page.$x(xpath);
     return element;
-};
+}
 
-async function await_new_pop_up(browser, page, xpath){
+const await_new_pop_up = async (browser, page, xpath) => {
     const newPagePromise = new Promise(x => browser.once('targetcreated', target => x(target.page())));
     await click(page, xpath);
     return await newPagePromise;
-};
+}
 
-async function return_first_page(browser){
-    return await browser.pages();
+const return_first_page = async browser => { return await browser.pages() }
 
-};
+const wait_url_ends_with = async (page, text) => { await page.waitForFunction("window.location.pathname == '" + text + "'"); }
 
-async function wait_url_ends_with(page, text){
-    await page.waitForFunction("window.location.pathname == '" + text + "'");
-};
-
-async function get_value(page, xpath){
-    return await page.$eval('textarea[formcontrolname="descricao"]', ({ value }) => value);
-};
+const get_value = async (page, xpath) => { return await page.$eval('textarea[formcontrolname="descricao"]', ({ value }) => value); }
 
 main()

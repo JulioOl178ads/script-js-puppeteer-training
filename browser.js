@@ -16,4 +16,16 @@ class Browser{
         return browser;
     };
 
+
+
+}
+
+const launch_browser = async (isHeadless) => {
+    const browser = await puppeter.launch({
+        headless: isHeadless,
+        defaultViewport:null,
+        args:['--start-maximized']
+    });
+
+    return browser;
 }
