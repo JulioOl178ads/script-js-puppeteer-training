@@ -36,6 +36,8 @@ module.exports = await_new_pop_up = async (browser, page, xpath) => {
     return await newPagePromise;
 }
 
+module.exports = navigate = async (page, url) => { return await page.page.goto(url); }
+
 module.exports = return_first_page = async browser => { return await browser.pages() }
 
 module.exports =  wait_url_ends_with = async (page, text) => { await page.waitForFunction("window.location.pathname == '" + text + "'"); }
