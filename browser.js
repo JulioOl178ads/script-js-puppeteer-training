@@ -1,6 +1,5 @@
 const puppeter = require('puppeteer');
-
-module.exports = class Browser{
+class Browser{
     constructor(browser, page){
         this.browser = browser;
         this.page = page;
@@ -32,5 +31,9 @@ module.exports = class Browser{
         Promise.resolve(await element[0].click());
     }
 
-
+    close = async () => {
+        await this.browser.close();
+    }
 }
+
+module.exports = Browser;
